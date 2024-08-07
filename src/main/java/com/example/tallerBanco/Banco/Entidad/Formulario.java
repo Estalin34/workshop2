@@ -4,16 +4,18 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
+import java.util.List;
 
 @Entity
 public class Formulario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id; // Identificador único para la entidad
+    private Long id;
 
     @NotEmpty(message = "El nombre no puede estar vacío")
     private String nombre;
@@ -32,6 +34,9 @@ public class Formulario {
     @NotEmpty(message = "El correo electrónico no puede estar vacío")
     @Email(message = "El correo electrónico debe ser válido")
     private String correoElectronico;
+
+    @OneToMany(mappedBy = "formulario")
+    private List<Cuenta> cuentas;
 
     // Getters y Setters
 
@@ -81,5 +86,13 @@ public class Formulario {
 
     public void setCorreoElectronico(String correoElectronico) {
         this.correoElectronico = correoElectronico;
+    }
+
+    public List<Cuenta> getCuentas() {
+        return cuentas;
+    }
+
+    public void setCuentas(List<Cuenta> cuentas) {
+        this.cuentas = cuentas;
     }
 }
